@@ -22,7 +22,7 @@ class Transfer
   # each transfer can only happen once (FAILED - 5)
   # rejects a transfer if the sender does not have enough funds (does not have a valid account) (FAILED - 6)
   def execute_transaction 
-    if valid? && sender.balance > 0 && self.status = "pending"
+    if valid? && sender.balance > amount && self.status = "pending"
       sender.balance -= amount
       receiver.balance += amount
       self.status = "complete"
@@ -37,7 +37,7 @@ class Transfer
   # can reverse a transfer between two accounts (FAILED - 7)
   # it can only reverse executed transfers (FAILED - 8)
   def reverse_transfer
-    if valid? && receiver.balance > 0 && self.status = "complete"
+    if valid? && receiver.balance > amount && self.status = "complete"
       sender.balance += amount
       receiver.balance -= amount
       self.status = "reversed" 
@@ -45,4 +45,4 @@ class Transfer
 
   end
 
-end
+
